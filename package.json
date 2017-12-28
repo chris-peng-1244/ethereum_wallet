@@ -1,6 +1,6 @@
 {
-  "name": "demo",
-  "version": "0.0.0",
+  "name": "coinmall_ethereum",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -13,5 +13,10 @@
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"
-  }
+  },
+  "description": "ethereum support for coinmall",
+  "main": "bin/www",
+  "repository": "git@116.62.239.97:coinmall/ethereum.git",
+  "author": "Peng Chi <pengchi@zjsk.onaliyun.com>",
+  "license": "MIT"
 }
