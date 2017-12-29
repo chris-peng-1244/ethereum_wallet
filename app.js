@@ -6,12 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var winston = require('winston');
 winston.add(winston.transports.File, {
-  level: 'warning',
   timestamp: true,
   filename: './runtime/api.log',
   maxsize: 1048576,
   maxFiles: 7,
   prettyPrint: true,
+  json: false,
 });
 require('dotenv').config();
 
