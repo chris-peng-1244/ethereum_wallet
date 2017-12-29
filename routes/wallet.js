@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const ATMAbi = require('../contracts/ATMToken').abi;
-const ATMTokenContract = web3.eth.contract(ATMAbi);
-const atmTokenContract = ATMTokenContract.at('0xxxxxx');
+const atmTokenContract = require('../models/ATMToken');
+const ErrorCode = require('../models/ErrorCode');
+const boom = require('boom');
 
 router.post('/transfer', (req, res, next) => {
+  let tx;
   try {
-    let tx = atmTokenContract.transfer(req.body.address, req.body.value);
+    tx = atmTokenContract.transfer(req.body.address, req.body.value);
   } catch (e) {
-    return res.status(500).json({
-      code: ErrorCode.ATM_TRANSFER_FAILED,
-      message: e.message,
-    });
+    return next(boom.badImplementation(e.message, req.body));
   }
 
   return res.json({
