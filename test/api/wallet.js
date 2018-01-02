@@ -1,24 +1,22 @@
-process.env.NODE_ENV = 'test';
-process.env.PORT = 3001;
-
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../../app');
-const should = chai.should();
-
-chai.use(chaiHttp);
+const infra = require('./index');
+const chai = infra.chai;
+const server = infra.server;
 
 describe('Wallet', () => {
-  describe('/POST transfer', () => {
-    it('should return the transaction id', (done) => {
+  describe('/POST transfer-atm', () => {
+    it('should return the transaction id', () => {
       chai.request(server)
-      .post('/wallet/transfer')
-      .end((err, res) => {
+      .post('/wallet/transfer-atm')
+      .send({
+        address: '0xf17f52151EbEF6C7334FAD080c5704D77216b732',
+        value: 1000
+      })
+      .then(res => {
         res.should.have.status(200);
-        res.body.should.be.a('array');
         let body = res.body;
-        console.log(body);
-        done();
+        body.code.should.equal(0);
+        body.message.should.equal('');
+        body.data.should.has.property('transactionHash');
       })
       .catch(e => {
         console.log(e);

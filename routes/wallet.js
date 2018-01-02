@@ -16,7 +16,13 @@ router.post('/transfer-atm', (req, res, next) => {
       if (err) {
         return next(boom.badImplementation(err, req.body));
       }
-      return res.json({ hash: hash });
+      return res.json({
+        code: 0,
+        message: '',
+        data: {
+          transactionHash: hash,
+        }
+      });
     });
   } catch (e) {
     console.log(e);
