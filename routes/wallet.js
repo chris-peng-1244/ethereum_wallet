@@ -4,7 +4,7 @@ const atmTokenContract = require('../models/ATMToken');
 const ErrorCode = require('../models/ErrorCode');
 const boom = require('boom');
 
-router.post('/transfer', (req, res, next) => {
+router.post('/transfer-atm', (req, res, next) => {
   let txObj = {
     from: process.env.ETH_COINBASE,
     to: req.body.address,

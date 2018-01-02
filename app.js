@@ -18,6 +18,7 @@ require('dotenv').config();
 var index = require('./routes/index');
 var users = require('./routes/users');
 var wallet = require('./routes/wallet');
+var transaction = require('./routes/transaction');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/wallet', wallet);
+app.use('/transaction', transaction);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
