@@ -51,7 +51,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   if (err.isServer) {
-    winston.error(`${req.path} Bad Request`, err.output.payload);
+    winston.error(`${req.path} ${err.message}`, err.data);
   }
   return res.status(err.output.statusCode).json(err.output.payload);
 });
