@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var winston = require('winston');
+var bearerToken = require('express-bearer-token');
 winston.add(winston.transports.File, {
   timestamp: true,
   filename: './runtime/api.log',
@@ -33,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bearerToken());
 
 app.use('/', index);
 app.use('/users', users);
@@ -55,7 +57,12 @@ app.use(function(err, req, res, next) {
   if (err.isServer) {
     winston.error(`${req.path} ${err.message}`, err.data);
   }
-  return res.status(err.output.statusCode).json(err.output.payload);
+  if (err.output) {
+    return res.status(err.output.statusCode).json(err.output.payload);
+  }
+  return res.status(500).json({
+    error: err.message,
+  });
 });
 
 module.exports = app;

@@ -10,3 +10,14 @@ chai.use(chaiHttp);
 
 exports.chai = chai;
 exports.server = server;
+exports.login = () => {
+  return chai.request(server)
+  .post('/users/login')
+  .send({
+    username: 'coinmall',
+    password: '123456',
+  })
+  .then(res => {
+    return res.body.data.token;
+  });
+};

@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const boom = require('boom');
 const web3 = require('../models/Web3');
+const auth = require('../middleware/auth');
+
+router.use(auth);
 
 router.get('/:txId', (req, res, next) => {
   let tx, txReceipt;

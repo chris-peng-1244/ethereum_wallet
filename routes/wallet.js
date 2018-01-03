@@ -4,7 +4,9 @@ const atmTokenContract = require('../models/ATMToken');
 const ErrorCode = require('../models/ErrorCode');
 const boom = require('boom');
 const redisClient = require('../models/Redis');
-const winston = require('winston');
+const auth = require('../middleware/auth');
+
+router.use(auth);
 
 router.post('/transfer-atm', (req, res, next) => {
   let txObj = {
