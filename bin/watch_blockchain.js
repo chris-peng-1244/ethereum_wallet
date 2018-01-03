@@ -22,12 +22,13 @@ transferEvent.watch((err, result) => {
 function callRechargeCallback(event)
 {
   let args = event.args;
-  return isInterestedAddress(args._to)
+  let toAddress = args._to.toLowerCase();
+  return isInterestedAddress(toAddress)
   .then(bool => {
     if (bool) {
-      return request(getRechargeCallbackUrl(args._to, args._value.toNumber()));
+      return request(getRechargeCallbackUrl(toAddress, args._value.toNumber()));
     }
-    console.log(`Ignore event, because ${args._to} is not in the user wallet list`);
+    console.log(`Ignore event, because ${toAddress} is not in the user wallet list`);
   })
   .catch(e => {
     console.log(e.message);
