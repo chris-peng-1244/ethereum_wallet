@@ -1,11 +1,7 @@
 require('dotenv').config();
 require('colors');
 
-const redis = require('redis');
-const Promise = require('bluebird');
-Promise.promisifyAll(redis.RedisClient.prototype);
-Promise.promisifyAll(redis.Multi.prototype);
-const redisClient = redis.createClient();
+const redisClient = require('../models/Redis');
 const request = require('request-promise');
 
 const atmToken = require('../models/ATMToken');

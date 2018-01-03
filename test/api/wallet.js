@@ -23,4 +23,19 @@ describe('Wallet', () => {
       });
     });
   });
+
+  describe('/POST create wallet', () => {
+    it('should return the wallet address', () => {
+      chai.request(server)
+      .post('/wallet')
+      .then(res => {
+        res.should.have.status(200);
+        res.body.code.should.equal(0);
+        body.data.should.has.property('address');
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    });
+  });
 });
