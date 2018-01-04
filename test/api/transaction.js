@@ -1,6 +1,7 @@
 const infra = require('./index');
 const chai = infra.chai;
 const server = infra.server;
+const assert = chai.assert;
 
 let token;
 describe('Transaction', () => {
@@ -14,7 +15,7 @@ describe('Transaction', () => {
   describe('/GET :txId', () => {
     it('should return the transaction details', () => {
       let to = '0xf17f52151EbEF6C7334FAD080c5704D77216b732';
-        chai.request(server)
+      return chai.request(server)
         .post('/wallet/transfer-atm')
         .send({
           address: to,
@@ -30,10 +31,7 @@ describe('Transaction', () => {
           body.code.should.equal(0);
           body.message.should.equal('');
           body.data.from.should.equal(process.env.ETH_COINBASE);
-          body.data.to.should.equal(to);
-        })
-        .catch(e => {
-          throw new Error(e.message);
+          body.data.to.should.equal(process.env.ATM_ADDRESS);
         });
     })
   });

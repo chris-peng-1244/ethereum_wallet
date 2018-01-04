@@ -5,6 +5,7 @@ const ErrorCode = require('../models/ErrorCode');
 const boom = require('boom');
 const redisClient = require('../models/Redis');
 const auth = require('../middleware/auth');
+const UserWallet = require('../models/UserWallet');
 
 router.use(auth);
 
@@ -35,11 +36,8 @@ router.post('/transfer-atm', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  redisClient.rpopAsync('availableUserWalletAddressList')
+  UserWallet.create()
   .then(address => {
-    if (null == address || '' == address) {
-      return next(boom.badImplementation('User wallet address list is empty'));
-    }
     return res.json({
       code: 0,
       message: '',

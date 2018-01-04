@@ -7,6 +7,7 @@ const server = require('../../app');
 const should = chai.should();
 
 chai.use(chaiHttp);
+chai.config.includeStack = true;
 
 exports.chai = chai;
 exports.server = server;

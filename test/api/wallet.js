@@ -13,7 +13,7 @@ describe('Wallet', () => {
 
   describe('/POST transfer-atm', () => {
     it('should return the transaction id', () => {
-      chai.request(server)
+      return chai.request(server)
       .post('/wallet/transfer-atm')
       .send({
         address: '0xf17f52151EbEF6C7334FAD080c5704D77216b732',
@@ -26,16 +26,13 @@ describe('Wallet', () => {
         body.code.should.equal(0);
         body.message.should.equal('');
         body.data.should.has.property('transactionHash');
-      })
-      .catch(e => {
-        throw new Error(e.message);
       });
     });
   });
 
   describe('/POST create wallet', () => {
     it('should return the wallet address', () => {
-      chai.request(server)
+      return chai.request(server)
       .post('/wallet')
       .send({
         access_token: token,
@@ -44,9 +41,6 @@ describe('Wallet', () => {
         res.should.have.status(200);
         res.body.code.should.equal(0);
         res.body.data.should.has.property('address');
-      })
-      .catch(e => {
-        throw new Error(e.message);
       });
     });
   });

@@ -5,7 +5,7 @@ const server = infra.server;
 describe('Users', () => {
   describe('POST /login', () => {
     it('should return the jwt when passing the correct user/pwd', () => {
-      chai.request(server)
+      return chai.request(server)
       .post('/users/login')
       .send({
         username: 'coinmall',
@@ -16,9 +16,6 @@ describe('Users', () => {
         res.body.code.should.equal(0);
         res.body.message.should.equal('');
         res.body.data.should.have.property('token');
-      })
-      .catch(e => {
-        throw new Error(e.message);
       });
     });
   });
