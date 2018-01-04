@@ -23,7 +23,10 @@ WalletContract.sweep = address => {
 
   return sweep(contract, balance)
   .then(hash => {
-    return [true, hash];
+    return [true, {
+      balance: balance,
+      hash: hash,
+    }];
   });
 };
 

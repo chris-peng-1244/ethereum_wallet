@@ -1,4 +1,5 @@
-const AVAILABLE_USER_WALLET_ADDRESSES = 'availableUserWalletAddressList';
+//const AVAILABLE_USER_WALLET_ADDRESSES = 'availableUserWalletAddressList';
+const AVAILABLE_USER_WALLET_ADDRESSES = 'coinmall_available_addresses';
 const USER_WALLET_ADDRESSES = 'coinmall_user_wallet_addresses';
 const redisClient = require('./Redis');
 const Promise = require('bluebird');

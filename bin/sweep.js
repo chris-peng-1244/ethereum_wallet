@@ -40,11 +40,10 @@ function sweep(address, callback)
   UserWallet.sweep(address)
   .then(result => {
     let bool = result[0];
-    let txHash = result[1];
     if (bool == false) {
       console.log('Skip sweeping since there isn\'t enough ATM');
     } else {
-      console.log(`Sweep transaction ${txHash.green}`);
+      console.log(`Sweep ${result[1].balance} out of ${address.green}`);
     }
   })
   .catch(e => {

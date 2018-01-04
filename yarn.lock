@@ -46,7 +46,7 @@ agentkeepalive@^3.3.0:
   dependencies:
     humanize-ms "^1.2.1"
 
-ajv@^5.1.0:
+ajv@^5.1.0, ajv@^5.1.1:
   version "5.5.2"
   resolved "http://registry.npm.taobao.org/ajv/download/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
   dependencies:
@@ -189,6 +189,10 @@ bcrypt@^1.0.3:
   version "2.0.7"
   resolved "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
 
+"bignumber.js@git+https://github.com/frozeman/bignumber.js-nolookahead.git":
+  version "2.0.7"
+  resolved "git+https://github.com/frozeman/bignumber.js-nolookahead.git#57692b3ecfc98bbdd6b3a516cb2353652ea49934"
+
 bin-links@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/bin-links/download/bin-links-1.1.0.tgz#e0a92cb57f01c4dc1088bca2bae6be110b9f64f9"
@@ -209,6 +213,10 @@ block-stream@*:
 bluebird@^3.5.0, bluebird@^3.5.1, bluebird@~3.5.1:
   version "3.5.1"
   resolved "http://registry.npm.taobao.org/bluebird/download/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
+
+bn.js@4.11.6:
+  version "4.11.6"
+  resolved "http://registry.npm.taobao.org/bn.js/download/bn.js-4.11.6.tgz#53344adb14617a13f6e8dd2ce28905d1c0ba3215"
 
 body-parser@~1.17.1:
   version "1.17.2"
@@ -590,6 +598,10 @@ crypto-js@^3.1.4:
   version "3.1.8"
   resolved "http://registry.npm.taobao.org/crypto-js/download/crypto-js-3.1.8.tgz#715f070bf6014f2ae992a98b3929258b713f08d5"
 
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "http://registry.npm.taobao.org/crypto-js/download/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+
 crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/crypto-random-string/download/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
@@ -807,6 +819,14 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
 etag@~1.8.0, etag@~1.8.1:
   version "1.8.1"
   resolved "http://registry.npm.taobao.org/etag/download/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
+
+ethjs-abi@0.1.8:
+  version "0.1.8"
+  resolved "http://registry.npm.taobao.org/ethjs-abi/download/ethjs-abi-0.1.8.tgz#cd288583ed628cdfadaf8adefa3ba1dbcbca6c18"
+  dependencies:
+    bn.js "4.11.6"
+    js-sha3 "0.5.5"
+    number-to-bn "1.7.0"
 
 execa@^0.7.0:
   version "0.7.0"
@@ -1278,6 +1298,10 @@ is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/is-fullwidth-code-point/download/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
 
+is-hex-prefixed@1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/is-hex-prefixed/download/is-hex-prefixed-1.0.0.tgz#7d8d37e6ad77e5d127148913c573e082d777f554"
+
 is-installed-globally@^0.1.0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/is-installed-globally/download/is-installed-globally-0.1.0.tgz#0dfd98f5a9111716dd535dda6492f67bf3d25a80"
@@ -1359,6 +1383,10 @@ jade@~1.11.0:
     uglify-js "^2.4.19"
     void-elements "~2.0.1"
     with "~4.0.0"
+
+js-sha3@0.5.5:
+  version "0.5.5"
+  resolved "http://registry.npm.taobao.org/js-sha3/download/js-sha3-0.5.5.tgz#baf0c0e8c54ad5903447df96ade7a4a1bca79a4a"
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -2010,6 +2038,13 @@ npm@^5.6.0:
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/number-is-nan/download/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
+
+number-to-bn@1.7.0:
+  version "1.7.0"
+  resolved "http://registry.npm.taobao.org/number-to-bn/download/number-to-bn-1.7.0.tgz#bb3623592f7e5f9e0030b1977bd41a0c53fe1ea0"
+  dependencies:
+    bn.js "4.11.6"
+    strip-hex-prefix "1.0.0"
 
 oauth-sign@~0.8.2:
   version "0.8.2"
@@ -2778,6 +2813,12 @@ strip-eof@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/strip-eof/download/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
 
+strip-hex-prefix@1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/strip-hex-prefix/download/strip-hex-prefix-1.0.0.tgz#0c5f155fef1151373377de9dbb588da05500e36f"
+  dependencies:
+    is-hex-prefixed "1.0.0"
+
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/strip-json-comments/download/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
@@ -2879,6 +2920,28 @@ transformers@2.1.0:
     css "~1.0.8"
     promise "~2.0"
     uglify-js "~2.2.5"
+
+truffle-blockchain-utils@^0.0.3:
+  version "0.0.3"
+  resolved "http://registry.npm.taobao.org/truffle-blockchain-utils/download/truffle-blockchain-utils-0.0.3.tgz#ae8a111ec124d96504f0e042c6f205c0b3817e29"
+  dependencies:
+    web3 "^0.20.1"
+
+truffle-contract-schema@^1.0.0:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/truffle-contract-schema/download/truffle-contract-schema-1.0.1.tgz#08ceaefe71062a8ac9ab881a77a30fda3744176e"
+  dependencies:
+    ajv "^5.1.1"
+    crypto-js "^3.1.9-1"
+
+truffle-contract@^3.0.1:
+  version "3.0.1"
+  resolved "http://registry.npm.taobao.org/truffle-contract/download/truffle-contract-3.0.1.tgz#7fd0395571b0c011afb809cbd6441d553e793201"
+  dependencies:
+    ethjs-abi "0.1.8"
+    truffle-blockchain-utils "^0.0.3"
+    truffle-contract-schema "^1.0.0"
+    web3 "^0.20.1"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
@@ -3039,6 +3102,16 @@ web3@0.19.0:
   resolved "http://registry.npm.taobao.org/web3/download/web3-0.19.0.tgz#8b18fba24421a59d2884859bcb9b718c2665524e"
   dependencies:
     bignumber.js "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
+    crypto-js "^3.1.4"
+    utf8 "^2.1.1"
+    xhr2 "*"
+    xmlhttprequest "*"
+
+web3@^0.20.1:
+  version "0.20.3"
+  resolved "http://registry.npm.taobao.org/web3/download/web3-0.20.3.tgz#caa44373dc8815ac8767bddb6ba73073964caa8b"
+  dependencies:
+    bignumber.js "git+https://github.com/frozeman/bignumber.js-nolookahead.git"
     crypto-js "^3.1.4"
     utf8 "^2.1.1"
     xhr2 "*"
