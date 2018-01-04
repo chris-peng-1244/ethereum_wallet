@@ -1,3 +1,4 @@
+require('dotenv').config();
 const redisClient = require('../models/Redis');
 const winston = require('winston');
 const UserWallet = require('../models/UserWallet');
@@ -37,11 +38,13 @@ function sweep(address, callback)
 {
   console.log(`Sweeping ${address.green}`);
   UserWallet.sweep(address)
-  .then((bool, tx) => {
+  .then(result => {
+    let bool = result[0];
+    let txHash = result[1];
     if (bool == false) {
       console.log('Skip sweeping since there isn\'t enough ATM');
     } else {
-      console.log(`Sweep transaction ${tx.hash.green}`);
+      console.log(`Sweep transaction ${txHash.green}`);
     }
   })
   .catch(e => {

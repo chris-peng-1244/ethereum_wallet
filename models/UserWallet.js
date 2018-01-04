@@ -2,6 +2,7 @@ const AVAILABLE_USER_WALLET_ADDRESSES = 'availableUserWalletAddressList';
 const USER_WALLET_ADDRESSES = 'coinmall_user_wallet_addresses';
 const redisClient = require('./Redis');
 const Promise = require('bluebird');
+const walletContract = require('./WalletContract');
 
 var UserWallet = {};
 
@@ -38,9 +39,17 @@ UserWallet.findAll = () => {
   return redisClient.smembersAsync(USER_WALLET_ADDRESSES);
 };
 
-UserWallet.sweep = Promise.promisify(address => {
-  throw new Error(`Can't sweep ${address}`);
-});
+/**
+ * Collect user's atm from their wallet
+ */
+UserWallet.sweep = address => {
+  try {
+    return walletContract.sweep(address);
+  } catch (e) {
+    console.log(e);
+    return new Error(e);
+  }
+};
 
 module.exports = UserWallet;
 module.exports.AVAILABLE_USER_WALLET_ADDRESSES = AVAILABLE_USER_WALLET_ADDRESSES;
