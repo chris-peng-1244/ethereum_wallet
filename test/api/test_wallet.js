@@ -41,6 +41,7 @@ describe('Wallet', () => {
         res.should.have.status(200);
         res.body.code.should.equal(0);
         res.body.data.should.has.property('address');
+        res.body.data.address.length.should.equal(42);
       });
     });
   });

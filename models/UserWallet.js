@@ -18,7 +18,7 @@ UserWallet.create = () => {
       if (null == addr || '' == addr) {
         return new Error('User wallet address list is empty');
       }
-      address = addr;
+      address = addr.split(':')[0];
       return redisClient.sadd(USER_WALLET_ADDRESSES, address);
     })
     .then(() => {
