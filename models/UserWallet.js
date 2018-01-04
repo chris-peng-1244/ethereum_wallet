@@ -1,6 +1,7 @@
 const AVAILABLE_USER_WALLET_ADDRESSES = 'availableUserWalletAddressList';
 const USER_WALLET_ADDRESSES = 'coinmall_user_wallet_addresses';
 const redisClient = require('./Redis');
+const Promise = require('bluebird');
 
 var UserWallet = {};
 
@@ -10,6 +11,8 @@ var UserWallet = {};
  * occurs at this address, we can react to it.
  *
  * Throws Error when the pre-created address set is empty.
+ *
+ * @return Promise
  */
 UserWallet.create = () => {
   let address;
@@ -25,6 +28,19 @@ UserWallet.create = () => {
       return address;
     });
 };
+
+/**
+ * Return all the addresses in the watch list.
+ *
+ * @return Promise
+ */
+UserWallet.findAll = () => {
+  return redisClient.smembersAsync(USER_WALLET_ADDRESSES);
+};
+
+UserWallet.sweep = Promise.promisify(address => {
+  throw new Error(`Can't sweep ${address}`);
+});
 
 module.exports = UserWallet;
 module.exports.AVAILABLE_USER_WALLET_ADDRESSES = AVAILABLE_USER_WALLET_ADDRESSES;
