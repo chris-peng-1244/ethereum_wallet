@@ -16,6 +16,10 @@ router.get('/:txId', (req, res, next) => {
     }));
   }
 
+  if (null === tx) {
+    return next(boom.badRequest(`Can't find transaction ${req.params.txId}`));
+  }
+
   tx.confirmationNumber = web3.eth.blockNumber - tx.blockNumber;
   tx.gasUsed = 0;
   if (txReceipt) {

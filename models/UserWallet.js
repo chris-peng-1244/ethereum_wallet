@@ -18,16 +18,19 @@ var UserWallet = {};
  */
 UserWallet.create = () => {
   let address;
+  let txId;
   return redisClient.rpopAsync(AVAILABLE_USER_WALLET_ADDRESSES)
     .then(addr => {
       if (null == addr || '' == addr) {
         return new Error('User wallet address list is empty');
       }
-      address = addr.split(':')[0];
+      splits = addr.split(':');
+      address = splits[0];
+      txId = splits[1];
       return redisClient.sadd(USER_WALLET_ADDRESSES, address);
     })
     .then(() => {
-      return address;
+      return [address, txId];
     });
 };
 

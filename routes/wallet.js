@@ -37,12 +37,13 @@ router.post('/transfer-atm', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   UserWallet.create()
-  .then(address => {
+  .then(result => {
     return res.json({
       code: 0,
       message: '',
       data: {
-        address: address
+        address: result[0],
+        transaction: result[1],
       }
     });
   })

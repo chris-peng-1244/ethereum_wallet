@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bearerToken());
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/wallet', wallet);
 app.use('/transaction', transaction);
 
@@ -58,7 +58,10 @@ app.use(function(err, req, res, next) {
     winston.error(`${req.path} ${err.message}`, err.data);
   }
   if (err.output) {
-    return res.status(err.output.statusCode).json(err.output.payload);
+    return res.status(err.output.statusCode).json({
+      code: err.output.payload.statusCode,
+      message: err.output.payload.message,
+    });
   }
   return res.status(500).json({
     error: err.message,
