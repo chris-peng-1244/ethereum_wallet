@@ -6,7 +6,7 @@ describe('Users', () => {
   describe('POST /login', () => {
     it('should return the jwt when passing the correct user/pwd', () => {
       return chai.request(server)
-      .post('/users/login')
+      .post('/user/login')
       .send({
         username: 'coinmall',
         password: '123456',

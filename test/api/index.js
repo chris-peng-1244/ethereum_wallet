@@ -13,7 +13,7 @@ exports.chai = chai;
 exports.server = server;
 exports.login = () => {
   return chai.request(server)
-  .post('/users/login')
+  .post('/user/login')
   .send({
     username: 'coinmall',
     password: '123456',
