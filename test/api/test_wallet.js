@@ -16,7 +16,7 @@ describe('Wallet', () => {
       return chai.request(server)
       .post('/wallet/transfer-atm')
       .send({
-        address: '0xf17f52151EbEF6C7334FAD080c5704D77216b732',
+        address: process.env.TEST_TO_ADDRESS,
         value: 1000,
         access_token: token,
       })

@@ -14,7 +14,7 @@ describe('Transaction', () => {
 
   describe('/GET :txId', () => {
     it('should return the transaction details', () => {
-      let to = '0xf17f52151EbEF6C7334FAD080c5704D77216b732';
+      let to = process.env.TEST_TO_ADDRESS;
       return chai.request(server)
         .post('/wallet/transfer-atm')
         .send({
