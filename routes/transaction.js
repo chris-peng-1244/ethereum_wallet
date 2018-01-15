@@ -26,7 +26,12 @@ router.get('/:txId', (req, res, next) => {
     tx.gasUsed = txReceipt.gasUsed || 0;
     tx.receipt = txReceipt;
   }
-  tx.valueInEth = web3.fromWei(tx.value, "ether");
+  // Override the value field
+  if (tx.to == process.env.ATM_ADDRESS) {
+    tx.value = getAtmValue(tx);
+  } else {
+    tx.value = web3.fromWei(tx.value, "ether");
+  }
 
   return res.json({
     code: 0,
@@ -34,5 +39,13 @@ router.get('/:txId', (req, res, next) => {
     data: tx,
   });
 });
+
+function getAtmValue(tx)
+{
+  if (tx.receipt && tx.receipt.logs && tx.receipt.logs[0]) {
+    return parseInt(tx.receipt.logs[0].data, 16);
+  }
+  return 0;
+}
 
 module.exports = router;
