@@ -17,8 +17,9 @@ router.post('/transfer-atm', (req, res, next) => {
     value: '0x0',
     gasPrice: process.env.ETH_GAS_PRICE,
     };
+  let atmValue = req.body.value * 100000000;
   try {
-    atmTokenContract.transfer.sendTransaction(req.body.address, req.body.value, txObj, (err, hash) => {
+    atmTokenContract.transfer.sendTransaction(req.body.address, atmValue, txObj, (err, hash) => {
       if (err) {
         return next(boom.badImplementation(err, req.body));
       }

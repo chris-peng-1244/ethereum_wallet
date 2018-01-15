@@ -43,7 +43,7 @@ router.get('/:txId', (req, res, next) => {
 function getAtmValue(tx)
 {
   if (tx.receipt && tx.receipt.logs && tx.receipt.logs[0]) {
-    return parseInt(tx.receipt.logs[0].data, 16);
+    return parseInt(tx.input.substr(74), 16)/100000000;
   }
   return 0;
 }
