@@ -20,7 +20,7 @@ router.get('/:txId', (req, res, next) => {
     return next(boom.badRequest(`Can't find transaction ${req.params.txId}`));
   }
 
-  tx.confirmationNumber = web3.eth.blockNumber - tx.blockNumber;
+  tx.confirmationNumber = tx.blockNumber ? web3.eth.blockNumber - tx.blockNumber : 0;
   tx.gasUsed = 0;
   if (txReceipt) {
     tx.gasUsed = txReceipt.gasUsed || 0;
