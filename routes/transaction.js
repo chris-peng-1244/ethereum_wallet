@@ -22,6 +22,7 @@ router.get('/:txId', (req, res, next) => {
 
   tx.confirmationNumber = tx.blockNumber ? web3.eth.blockNumber - tx.blockNumber : 0;
   tx.gasUsed = 0;
+  tx.gasPrice = web3.fromWei(tx.gasPrice, "gwei");
   if (txReceipt) {
     tx.gasUsed = txReceipt.gasUsed || 0;
     tx.receipt = txReceipt;
