@@ -89,4 +89,5 @@ function getRechargeCallbackUrl(to, txId)
 {
   let url = `${process.env.COINMALL_SERVER_HOST}/recharge/${txId}/3`;
   console.log(`Sending callback to ` + url.green);
+  return url;
 }
