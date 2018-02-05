@@ -71,7 +71,7 @@ function callRechargeCallback(event)
   })
   .then(bool => {
     if (bool) {
-      return request(getRechargeCallbackUrl(toAddress, args._value.toNumber()));
+      return request(getRechargeCallbackUrl(toAddress, event.transactionHash));
     }
     console.log(`Ignore event, because ${toAddress} is not in the user wallet list`);
   })
@@ -85,8 +85,8 @@ function isInterestedAddress(address)
   return redisClient.sismemberAsync('coinmall_user_wallet_addresses', address);
 }
 
-function getRechargeCallbackUrl(to, value)
+function getRechargeCallbackUrl(to, txId)
 {
-  let url = `${process.env.COINMALL_SERVER_HOST}/recharge/${value}/3`;
+  let url = `${process.env.COINMALL_SERVER_HOST}/recharge/${txId}/3`;
   console.log(`Sending callback to ` + url.green);
 }
