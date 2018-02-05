@@ -28,7 +28,11 @@ router.get('/:txId', (req, res, next) => {
   }
   // Override the value field
   if (tx.to == process.env.ATM_ADDRESS) {
+    console.log("ATM tx input: " + tx.input);
     tx.value = getAtmValue(tx);
+    // ATM transaction's to address is ATM contract address.
+    // Replace it with the actually to address to which the transaction send.
+    tx.to = getAtmToAddress(tx);
   } else {
     tx.value = web3.fromWei(tx.value, "ether");
   }
@@ -43,6 +47,11 @@ router.get('/:txId', (req, res, next) => {
 function getAtmValue(tx)
 {
   return parseInt(tx.input.substr(74), 16)/100000000;
+}
+
+function getAtmToAddress(tx)
+{
+  return '0x' + tx.input.substr(32, 40);
 }
 
 module.exports = router;
