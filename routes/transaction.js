@@ -51,7 +51,7 @@ function getAtmValue(tx)
 
 function getAtmToAddress(tx)
 {
-  return '0x' + tx.input.substr(32, 40);
+  return '0x' + tx.input.substr(34, 40);
 }
 
 module.exports = router;
