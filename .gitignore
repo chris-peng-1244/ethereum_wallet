@@ -1,0 +1,7 @@
+node_modules
+build
+.env
+ecosystem.config.js
+truffle.js
+.eslintrc.js
+package-lock.json
