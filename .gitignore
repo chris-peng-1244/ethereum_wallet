@@ -5,3 +5,4 @@ ecosystem.config.js
 truffle.js
 .eslintrc.js
 package-lock.json
+.vscode
