@@ -7,35 +7,47 @@ const redisClient = require('../models/Redis');
 const auth = require('../middleware/auth');
 const UserWallet = require('../models/UserWallet');
 const web3 = require('../models/Web3');
+const signer = require('../models/TransactionSigner')(process.env.PRIVATE_KEY);
 
 router.use(auth);
 
 router.post('/transfer-atm', (req, res, next) => {
-  let txObj = {
-    from: process.env.ETH_COINBASE,
-    to: req.body.address,
-    value: '0x0',
-    gasPrice: process.env.ETH_GAS_PRICE,
-    };
   let atmValue = req.body.value * 100000000;
-  try {
-    atmTokenContract.transfer.sendTransaction(req.body.address, atmValue, txObj, (err, hash) => {
-      if (err) {
-        return next(boom.badImplementation(err, req.body));
+  const rawTx = getTransferTokenRawTransaction(req.body.address, atmValue);
+  web3.eth.sendRawTransaction(rawTx, (err, hash) => {
+    if (err) {
+      return next(boom.badImplementation(err, req.body));
+    }
+    return res.json({
+      code: 0,
+      message: '',
+      data: {
+        transactionHash: hash,
       }
-      return res.json({
-        code: 0,
-        message: '',
-        data: {
-          transactionHash: hash,
-        }
-      });
     });
-  } catch (e) {
-    return next(boom.badImplementation(e.message, req.body));
-  }
-
+  });
 });
+
+function getTransferTokenRawTransaction(to, atmValue)
+{
+  const gasLimit = 60000;
+  const gasPrice = parseInt(process.env.ETH_GAS_PRICE);
+  const nonce = parseInt(web3.eth.getTransactionCount(process.env.ETH_COINBASE));
+  let txObj = {
+    nonce: '0x' + nonce.toString(16),
+    from: process.env.ETH_COINBASE,
+    to: process.env.ATM_ADDRESS,
+    value: '0x0',
+    gasPrice: '0x' + gasPrice.toString(16),
+    gasLimit: '0x' + gasLimit.toString(16),
+  };
+  let data = '0xa9059cbb'; 
+  data += to.substr(2).padStart(64, '0');
+  atmValue = atmValue.toString(16);
+  data += atmValue.padStart(64, '0');
+  txObj['data'] = data;
+  return signer.sign(txObj);
+}
 
 router.post('/transfer', (req, res, next) => {
   let txObj = {
