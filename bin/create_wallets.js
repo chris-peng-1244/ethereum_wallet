@@ -1,11 +1,14 @@
 require('dotenv').config();
-const web3 = require('../models/Web3');
+// const web3 = require('../models/Web3');
+// const Web3 = require('web3');
 const contract = require("truffle-contract");
 const redisClient = require('../models/Redis');
 const Promise = require('bluebird');
 const Async = require('async');
 const Controller = contract(require('../build/contracts/Controller'));
-Controller.setProvider(web3.currentProvider);
+const HDWalletProvider = require('truffle-hdwallet-provider');
+Controller.setProvider(new HDWalletProvider(process.env.MNEMONIC, process.env.ETH_PROVIDER));
+// Controller.setProvider(web3.currentProvider);
 Controller.defaults({
   from: process.env.ETH_COINBASE,
   gasPrice: process.env.ETH_GAS_LIMIT,
@@ -15,7 +18,7 @@ Controller.defaults({
 Controller.deployed()
 .then(inst => {
   let addresses = [];
-  for (i = 0; i < 40; i++) {
+  for (i = 0; i < process.env.WALLET_NUMBER; i++) {
     addresses.push(inst.makeWallet());
   }
 

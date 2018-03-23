@@ -4,7 +4,7 @@ require('colors');
 const redisClient = require('../models/Redis');
 const request = require('request-promise');
 
-const atmToken = require('../models/ATMToken');
+const atmToken = require('../models/ATMTokenWebSocket');
 const web3 = require('../models/Web3');
 
 const LATEST_BLOCKNUMBER_KEY = 'coinmall_watched_latest_blocknumber';
@@ -13,22 +13,20 @@ const WATCHED_TRANSACTION_KEY = 'coinmall_watched_transactions';
 let transferEvent;
 redisClient.getAsync(LATEST_BLOCKNUMBER_KEY)
 .then(number => {
-  if (isNaN(number)) {
-    number = web3.eth.blockNumber > 1000 ? web3.eth.blockNumber - 1000 : 0;
+  if (isNaN(number) || (null === number)) {
+    return web3.eth.getBlockNumber((err, blockNumber) => {
+      return (blockNumber > 1000) ? (blockNumber - 1000) : 0;
+    });
   }
-
+  return number;
+}).then(number => {
   console.log(`Start watch from block ${number}`);
-  transferEvent = atmToken.Transfer({}, {
+  transferEvent = atmToken.events.Transfer({
     fromBlock: number,
-    toBlocK: 'latest',
-  });
-
-  transferEvent.watch((err, result) => {
-    if (err) {
-      console.err(err.red);
-    } else {
-      console.log(`Catch transfer event ` + result.transactionHash.green);
-      redisClient.sismemberAsync(WATCHED_TRANSACTION_KEY, result.transactionHash)
+  })
+  .on('data', result => {
+    console.log(`Catch transfer event ` + result.transactionHash.green);
+    redisClient.sismemberAsync(WATCHED_TRANSACTION_KEY, result.transactionHash)
       .then(bool => {
         if (!bool) {
           return callRechargeCallback(result);
@@ -41,29 +39,30 @@ redisClient.getAsync(LATEST_BLOCKNUMBER_KEY)
       .catch(e => {
         console.error(e.message.red.bold);
       });
-    }
-  });
+  })
+  .on('error', console.error);
 });
 
 process.on('SIGINT', () => {
   console.log('Quitting...'.red);
-  let blockNumber = web3.eth.blockNumber;
-  console.log(`The latest block number is ${blockNumber}`);
-  redisClient.setAsync(LATEST_BLOCKNUMBER_KEY, blockNumber)
+  web3.eth.getBlockNumber((err, blockNumber) => {
+    console.log(`The latest block number is ${blockNumber}`);
+    return redisClient.setAsync(LATEST_BLOCKNUMBER_KEY, blockNumber);
+  })
   .then(() => {
     redisClient.quit();
-    transferEvent.stopWatching();
+    // transferEvent.stopWatching();
     process.exit(0);
   })
   .catch(e => {
-    console.log(`Exception during quitting: e.message`.red.bold);
+    console.log(`Exception during quitting: ${e.message}`.red.bold);
     process.exit(1);
   });
 });
 
 function callRechargeCallback(event)
 {
-  let args = event.args;
+  let args = event.returnValues;
   let toAddress = args._to.toLowerCase();
   return redisClient.saddAsync(WATCHED_TRANSACTION_KEY, event.transactionHash)
   .then(() => {
