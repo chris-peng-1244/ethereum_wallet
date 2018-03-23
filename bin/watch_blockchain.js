@@ -25,7 +25,7 @@ redisClient.getAsync(LATEST_BLOCKNUMBER_KEY)
 
   transferEvent.watch((err, result) => {
     if (err) {
-      console.err(err.red);
+      console.error(err.red);
     } else {
       console.log(`Catch transfer event ` + result.transactionHash.green);
       redisClient.sismemberAsync(WATCHED_TRANSACTION_KEY, result.transactionHash)
