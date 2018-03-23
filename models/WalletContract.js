@@ -1,6 +1,6 @@
 const abi = require('../build/contracts/UserWallet').abi;
 const web3 = require('./Web3');
-const UserWalletContract = web3.eth.contract(abi);
+const UserWalletContract = new web3.eth.Contract(abi);
 const atmToken = require('./ATMToken');
 const Promise = require('bluebird');
 
