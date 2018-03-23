@@ -62,7 +62,7 @@ process.on('SIGINT', () => {
 
 function callRechargeCallback(event)
 {
-  let args = event.args;
+  let args = event.returnValues;
   let toAddress = args._to.toLowerCase();
   return redisClient.saddAsync(WATCHED_TRANSACTION_KEY, event.transactionHash)
   .then(() => {
