@@ -5,11 +5,11 @@ const auth = require('../middleware/auth');
 
 router.use(auth);
 
-router.get('/:txId', (req, res, next) => {
+router.get('/:txId', async (req, res, next) => {
   let tx, txReceipt;
   try {
-    tx = web3.eth.getTransaction(req.params.txId);
-    txReceipt = web3.eth.getTransactionReceipt(req.params.txId);
+    tx = await web3.eth.getTransaction(req.params.txId)
+    txReceipt = await web3.eth.getTransactionReceipt(req.params.txId);
   } catch (e) {
     return next(boom.badRequest(e.message, {
       txId: req.params.txId,
@@ -20,22 +20,23 @@ router.get('/:txId', (req, res, next) => {
     return next(boom.badRequest(`Can't find transaction ${req.params.txId}`));
   }
 
-  tx.confirmationNumber = tx.blockNumber ? web3.eth.blockNumber - tx.blockNumber : 0;
+  const blockNumber = await web3.eth.getBlockNumber();
+  tx.confirmationNumber = tx.blockNumber ? (blockNumber - tx.blockNumber) : 0;
   tx.gasUsed = 0;
-  tx.gasPrice = web3.fromWei(tx.gasPrice, "gwei");
+  tx.gasPrice = web3.utils.fromWei(tx.gasPrice, "gwei");
   if (txReceipt) {
     tx.gasUsed = txReceipt.gasUsed || 0;
     tx.receipt = txReceipt;
   }
   // Override the value field
-  if (tx.to == process.env.ATM_ADDRESS) {
+  if (tx.to.toLowerCase() == process.env.ATM_ADDRESS) {
     console.log("ATM tx input: " + tx.input);
     tx.value = getAtmValue(tx);
     // ATM transaction's to address is ATM contract address.
     // Replace it with the actually to address to which the transaction send.
     tx.to = getAtmToAddress(tx);
   } else {
-    tx.value = web3.fromWei(tx.value, "ether");
+    tx.value = web3.utils.fromWei(tx.value, "ether");
   }
 
   return res.json({
