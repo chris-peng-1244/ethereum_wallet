@@ -30,7 +30,6 @@ router.get('/:txId', async (req, res, next) => {
   }
   // Override the value field
   if (tx.to.toLowerCase() == process.env.ATM_ADDRESS) {
-    console.log("ATM tx input: " + tx.input);
     tx.value = getAtmValue(tx);
     // ATM transaction's to address is ATM contract address.
     // Replace it with the actually to address to which the transaction send.

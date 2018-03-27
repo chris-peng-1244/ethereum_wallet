@@ -40,7 +40,9 @@ redisClient.getAsync(LATEST_BLOCKNUMBER_KEY)
         console.error(e.message.red.bold);
       });
   })
-  .on('error', console.error);
+  .on('error', err => {
+    console.log(err);
+  });
 });
 
 process.on('SIGINT', () => {
