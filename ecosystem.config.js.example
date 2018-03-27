@@ -21,7 +21,7 @@ module.exports = {
     // Second application
     {
       name      : 'Watch blockchain',
-      script    : 'bin/watch_blockchain.js',
+      script    : 'bin/subscribe_new_block_headers.js',
     }
   ],
 
