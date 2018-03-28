@@ -22,8 +22,12 @@ redisClient.getAsync(LATEST_BLOCKNUMBER_KEY)
             if (number < latestNumber) {
                 for (let i = number; i <= latestNumber; i++) {
                     console.log(`Block number is ${i}`);
-                    await scanTransactionsInBlock(i);
-                    await redisClient.setAsync(LATEST_BLOCKNUMBER_KEY, i);
+                    try {
+                        await scanTransactionsInBlock(i);
+                        await redisClient.setAsync(LATEST_BLOCKNUMBER_KEY, i);
+                    } catch (e) {
+                        console.log(`Error: ${e.message.red.bold}`);
+                    }
                 }
                 number = latestNumber + 1;
             } else {
