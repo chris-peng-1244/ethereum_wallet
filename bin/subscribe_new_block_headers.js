@@ -53,7 +53,8 @@ async function scanTransaction(txHash)
 {
     const tx = await web3.eth.getTransaction(txHash);
     console.log(`Scanning transaction ${txHash}...`);
-    if (null === tx.to || tx.to.toLowerCase() !== process.env.ATM_ADDRESS) {
+    if (null === tx || null === tx.to 
+        || tx.to.toLowerCase() !== process.env.ATM_ADDRESS) {
         return;
     }
     console.log("This transaction's to adress is ATM address");
